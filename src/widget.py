@@ -35,9 +35,3 @@ def get_date(date_str: str) -> str:
     date_list[2] = date_list[2][:2]
     date_list_reverse = ".".join(date_list[::-1])
     return date_list_reverse
-
-
-if __name__ == "__main__":
-    print(mask_account_card("Maestro 1596837868705199"))
-    print(mask_account_card("Счет 64686473678894779589"))
-    print(get_date("2024-03-11T02:26:18.671407"))
