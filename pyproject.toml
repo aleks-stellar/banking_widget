@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "9-1-poetry"
+name = "banking_widget"
 version = "0.1.0"
 description = ""
 authors = [
