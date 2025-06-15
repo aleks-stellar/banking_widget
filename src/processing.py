@@ -28,8 +28,8 @@ def get_date_format(
     date_str = str(transaction_dict["date"])
     date_list = date_str.split("-", 2)
     date_list[2] = date_list[2][:2]
-    date_str_reverse = "".join(date_list)
-    return int(date_str_reverse)
+    date_str = "".join(date_list)
+    return int(date_str)
 
 
 def sort_by_date(
