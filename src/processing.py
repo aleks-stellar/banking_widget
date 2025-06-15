@@ -40,6 +40,8 @@ def sort_by_date(
     Принимает на вход список словарей и сортирует его по дате
     """
     sorted_transactions_list = sorted(
-        unsorted_transactions_list, key=get_date_format, reverse=sorting_direction
+        unsorted_transactions_list,
+        key=get_date_format,
+        reverse=sorting_direction
     )
     return sorted_transactions_list
