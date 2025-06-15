@@ -1,8 +1,9 @@
-from typing import List, Dict
+from typing import Dict, List
+
 
 def filter_by_state(
     dicts_list: List[Dict[str, str | int]],
-    state_key:str="CANCELED"
+    state_key: str = "EXECUTED"
 ) -> List[Dict[str, str | int]]:
     """
     Функция принимает список словарей и проводит его фильтрацию
@@ -16,4 +17,29 @@ def filter_by_state(
     return filtered_dicts_list
 
 
-print(filter_by_state([{'id': 41428829, 'state': 'EXECUTED', 'date': '2019-07-03T18:35:29.512364'}, {'id': 939719570, 'state': 'EXECUTED', 'date': '2018-06-30T02:08:58.425572'}, {'id': 594226727, 'state': 'CANCELED', 'date': '2018-09-12T21:27:25.241689'}, {'id': 615064591, 'state': 'CANCELED', 'date': '2018-10-14T08:21:33.419441'}]))
+# Функция для сортировки даты
+def get_date_format(
+    dicts_list_date: Dict[str, str | int]
+) -> int:
+    """
+    Функция принимает словарь и извлекает из
+    него дату для дальнейшей сортировки
+    """
+    date_str = str(dicts_list_date["date"])
+    date_list = date_str.split("-", 2)
+    date_list[2] = date_list[2][:2]
+    date_list_reverse = "".join(date_list)
+    return int(date_list_reverse)
+
+
+def sort_by_date(
+    dictionaries_list: List[Dict[str, str | int]],
+    sorting_direction: bool = True
+) -> List[Dict[str, str | int]]:
+    """
+    Принимает на вход список словарей и сортирует его по дате
+    """
+    sorted_dictionaries_list = sorted(
+        dictionaries_list, key=get_date_format, reverse=sorting_direction
+    )
+    return sorted_dictionaries_list
