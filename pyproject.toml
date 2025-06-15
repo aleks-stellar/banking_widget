@@ -23,7 +23,6 @@ isort = "^6.0.1"
 
 
 [tool.black]
-line-length = 119
 exclude = '''
 (
   /(
@@ -33,7 +32,6 @@ exclude = '''
 '''
 
 [tool.isort]
-line_length = 119
 
 [tool.mypy]
 disallow_untyped_defs = true
