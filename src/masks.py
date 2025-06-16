@@ -5,7 +5,10 @@
 
 def get_mask_card_number(card_number: int) -> str:
     """Функция принимает на вход номер карты и возвращает ее маску."""
-    card_number_list = [str(card_number)[i: i + 4] for i in range(0, len(str(card_number)), 4)]
+    card_number_list = [
+        str(card_number)[i: i + 4]
+        for i in range(0, len(str(card_number)), 4)
+    ]
     card_number_list[1] = card_number_list[1][:2] + "**"
     card_number_list[2] = "****"
     modified_card_number = " ".join(card_number_list)
