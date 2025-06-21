@@ -13,8 +13,15 @@ from src import masks
 def mask_account_card(card_info: str) -> str:
     """Функция принимает информацию о карте и маскирует номер карты
     или счета"""
+
     card_type_list = []
     card_info_list = card_info.split()
+
+    if len(card_info_list) < 2:
+        raise TypeError
+
+    if card_info_list[0].isdigit():
+        raise TypeError
 
     for string in card_info_list:
         if string.isalpha():
