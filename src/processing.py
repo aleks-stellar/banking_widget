@@ -9,6 +9,11 @@ def filter_by_state(
     Функция принимает список словарей и проводит его фильтрацию
     по ключу
     """
+
+    for transaction in transactions_list:
+        if "state" not in transaction:
+            raise KeyError
+
     filtered_transactions_list = [
         transaction
         for transaction in transactions_list
@@ -27,6 +32,13 @@ def get_date_format(
     """
     date_str = str(transaction_dict["date"])
     date_list = date_str.split("-", 2)
+
+    if not date_list[0].isdigit() or not date_list[1].isdigit() or not date_list[2][:2].isdigit():
+        raise TypeError
+
+    if not len(date_list[0]) == 4 or not len(date_list[1]) == 2:
+        raise TypeError
+
     date_list[2] = date_list[2][:2]
     date_str = "".join(date_list)
     return int(date_str)
