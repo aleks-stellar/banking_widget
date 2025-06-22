@@ -45,3 +45,8 @@ def account_card_account():
 @pytest.fixture
 def date_correct():
     return "2024-03-11T02:26:18.671407"
+
+# Фикстура для некорректной входной даты
+@pytest.fixture
+def date_incorrect():
+    return "03-11-2024T02:26:18.671407"

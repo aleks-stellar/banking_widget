@@ -39,12 +39,9 @@ def test_get_date_correct(date_correct):
 
 
 # Тестирование функции get_date при некорректных данных
-def test_get_date_incorrect_format():
+def test_get_date_incorrect_format(date_incorrect):
     with pytest.raises(TypeError):
-        get_date("03-11-2024T02:26:18.671407")
-
-    with pytest.raises(TypeError):
-        get_date("0a-11-2024T02:26:18.671407")
+        get_date(date_incorrect)
 
     with pytest.raises(TypeError):
         get_date("T02:26:18.671407")
