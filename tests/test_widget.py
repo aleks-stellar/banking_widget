@@ -1,12 +1,12 @@
 import pytest
 
-from src.widget import mask_account_card
+from src.widget import mask_account_card, get_date
 
-# Тестирование функции при корректных входных данных
-def test_mask_account_card():
-    assert mask_account_card("Visa Platinum 7000792289606361") == "Visa Platinum 7000 79** **** 6361",\
+# Тестирование функции mask_account_card при корректных входных данных
+def test_mask_account_card(account_card_card, account_card_account):
+    assert mask_account_card(account_card_card) == "Visa Platinum 7000 79** **** 6361",\
         "Маскировка виджета карты не соответствует ожидаемой"
-    assert mask_account_card("Счет 73654108430135874305") == "Счет **4305", \
+    assert mask_account_card(account_card_account) == "Счет **4305", \
         "Маскировка виджета счета не соответствует ожидаемой"
 
 
@@ -21,7 +21,7 @@ def test_mask_account_card_parameterized(info, expected):
     assert mask_account_card(info) == expected
 
 
-# Тестирование функции при некорректных входных данных
+# Тестирование функции mask_account_card при некорректных входных данных
 def test_mask_account_card_incorrect():
     with pytest.raises(TypeError):
         mask_account_card("Счет")
@@ -31,3 +31,20 @@ def test_mask_account_card_incorrect():
         mask_account_card("5768374894856730")
     with pytest.raises(TypeError):
         mask_account_card("5768374894856730 Maestro")
+
+
+# Тестирование функции get_date при корректных входных данных
+def test_get_date_correct(date_correct):
+    assert get_date(date_correct) == "11.03.2024"
+
+
+# Тестирование функции get_date при некорректных данных
+def test_get_date_incorrect_format():
+    with pytest.raises(TypeError):
+        get_date("03-11-2024T02:26:18.671407")
+
+    with pytest.raises(TypeError):
+        get_date("0a-11-2024T02:26:18.671407")
+
+    with pytest.raises(TypeError):
+        get_date("T02:26:18.671407")
