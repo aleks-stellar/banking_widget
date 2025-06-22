@@ -40,7 +40,9 @@ def get_date(date_str: str) -> str:
     """Функция реформатирует дату"""
     date_list = date_str.split("-", 2)
 
-    if not date_list[0].isdigit() or not date_list[1].isdigit() or not date_list[2][:2].isdigit():
+    if (not date_list[0].isdigit() or
+            not date_list[1].isdigit() or
+            not date_list[2][:2].isdigit()):
         raise TypeError
 
     if not len(date_list[0]) == 4 or not len(date_list[1]) == 2:

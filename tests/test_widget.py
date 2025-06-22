@@ -1,11 +1,15 @@
 import pytest
 
-from src.widget import mask_account_card, get_date
+from src.widget import get_date, mask_account_card
+
 
 # Тестирование функции mask_account_card при корректных входных данных
-def test_mask_account_card(account_card_card, account_card_account):
-    assert mask_account_card(account_card_card) == "Visa Platinum 7000 79** **** 6361",\
-        "Маскировка виджета карты не соответствует ожидаемой"
+def test_mask_account_card(
+        account_card_card: str, account_card_account: str
+) -> None:
+    assert mask_account_card(account_card_card) == (
+        "Visa Platinum 7000 79** **** 6361"
+    ), "Маскировка виджета карты не соответствует ожидаемой"
     assert mask_account_card(account_card_account) == "Счет **4305", \
         "Маскировка виджета счета не соответствует ожидаемой"
 
@@ -17,12 +21,14 @@ def test_mask_account_card(account_card_card, account_card_account):
     ("MasterCard 7158300734726758", "MasterCard 7158 30** **** 6758"),
     ("Visa Gold 5999414228426353", "Visa Gold 5999 41** **** 6353")
 ])
-def test_mask_account_card_parameterized(info, expected):
+def test_mask_account_card_parameterized(
+        info: str, expected: str
+) -> None:
     assert mask_account_card(info) == expected
 
 
 # Тестирование функции mask_account_card при некорректных входных данных
-def test_mask_account_card_incorrect():
+def test_mask_account_card_incorrect() -> None:
     with pytest.raises(TypeError):
         mask_account_card("Счет")
     with pytest.raises(TypeError):
@@ -34,12 +40,12 @@ def test_mask_account_card_incorrect():
 
 
 # Тестирование функции get_date при корректных входных данных
-def test_get_date_correct(date_correct):
+def test_get_date_correct(date_correct: str) -> None:
     assert get_date(date_correct) == "11.03.2024"
 
 
 # Тестирование функции get_date при некорректных данных
-def test_get_date_incorrect_format(date_incorrect):
+def test_get_date_incorrect_format(date_incorrect: str) -> None:
     with pytest.raises(TypeError):
         get_date(date_incorrect)
 

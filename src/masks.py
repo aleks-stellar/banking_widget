@@ -5,8 +5,7 @@
 
 def get_mask_card_number(card_number: int) -> str:
     """Функция принимает на вход номер карты и возвращает ее маску."""
-
-    if type(card_number) != int:
+    if not isinstance(card_number, int):
         raise TypeError("Полученное значение не является числом")
 
     if len(str(card_number)) != 16:
@@ -25,7 +24,7 @@ def get_mask_card_number(card_number: int) -> str:
 def get_mask_account(account_number: int) -> str:
     """Функция принимает на вход номер счета и возвращает его маску."""
 
-    if type(account_number) != int:
+    if not isinstance(account_number, int):
         raise TypeError("Полученное значение не является числом")
 
     if len(str(account_number)) != 20:
