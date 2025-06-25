@@ -13,8 +13,15 @@ from src import masks
 def mask_account_card(card_info: str) -> str:
     """Функция принимает информацию о карте и маскирует номер карты
     или счета"""
+
     card_type_list = []
     card_info_list = card_info.split()
+
+    if len(card_info_list) < 2:
+        raise TypeError
+
+    if card_info_list[0].isdigit():
+        raise TypeError
 
     for string in card_info_list:
         if string.isalpha():
@@ -32,6 +39,15 @@ def mask_account_card(card_info: str) -> str:
 def get_date(date_str: str) -> str:
     """Функция реформатирует дату"""
     date_list = date_str.split("-", 2)
+
+    if (not date_list[0].isdigit() or
+            not date_list[1].isdigit() or
+            not date_list[2][:2].isdigit()):
+        raise TypeError
+
+    if not len(date_list[0]) == 4 or not len(date_list[1]) == 2:
+        raise TypeError
+
     date_list[2] = date_list[2][:2]
     date_list_reverse = ".".join(date_list[::-1])
     return date_list_reverse
