@@ -1,6 +1,7 @@
 """Этот модуль содержит все новые функции,
 реализующие генераторы для обработки данных."""
 from typing import Iterator
+from random import randint
 
 
 def filter_by_currency(
@@ -111,3 +112,23 @@ descriptions = transaction_descriptions(transactions_list)
 
 for i in range(5):
     print(next(descriptions))
+
+
+def card_number_generator(
+        start: int=1, stop: int=9999999999999999
+) -> Iterator[str]:
+    """Функция генерирует номер карты в формате XXXX XXXX XXXX XXXX"""
+    for num in range(start, stop + 1):
+        card_number_str = ("0" * (16 - len(str(num)))
+                           + str(num))
+        card_number_str = " ".join(
+            [
+                card_number_str[n: n + 4]
+                for n in range(0, len(card_number_str), 4)
+            ]
+        )
+        yield card_number_str
+
+# Пример использования функции
+for card_number in card_number_generator(1, 5):
+    print(card_number)
