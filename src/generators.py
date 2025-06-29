@@ -1,12 +1,12 @@
 """Этот модуль содержит все новые функции,
 реализующие генераторы для обработки данных."""
-from  typing import Iterator, Iterable
+from typing import Iterator
 
 
 def filter_by_currency(
-        transactions: list[dict[str, str|int|dict[str, str|dict[str, str]]]],
+        transactions: list[dict],
         currency: str
-) -> Iterator:
+) -> Iterator[dict]:
     """Функция по списку транзакций возвращает итератор
     с транзакциями в определенной валюте"""
     for transaction in transactions:
@@ -95,5 +95,19 @@ transactions_list = (
     ]
 )
 usd_transactions = filter_by_currency(transactions_list, "USD")
+
 for i in range(2):
     print(next(usd_transactions))
+
+
+def transaction_descriptions(transactions: list[dict]) -> Iterator[str]:
+    """Функция генерирует описание операций по очереди"""
+    for transaction in transactions:
+        yield transaction["description"]
+
+
+# Пример использования функции
+descriptions = transaction_descriptions(transactions_list)
+
+for i in range(5):
+    print(next(descriptions))
