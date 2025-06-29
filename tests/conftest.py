@@ -169,5 +169,3 @@ def transactions_description_list() -> list[dict]:
         }
     ]
     return transactions_list
-
-
