@@ -88,10 +88,9 @@ def transactions_list_without_state() -> list[dict[str, int | str]]:
 
 
 # Фикстура для корректного списка транзакций
-# в котором представлено описание транзакции
 @pytest.fixture
-def transactions_description_list() -> list[dict]:
-    transactions_list = [
+def list_transactions() -> list[dict]:
+    return [
         {
             "id": 939719570,
             "state": "EXECUTED",
@@ -168,4 +167,3 @@ def transactions_description_list() -> list[dict]:
             "to": "Счет 14211924144426031657"
         }
     ]
-    return transactions_list
