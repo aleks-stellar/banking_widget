@@ -1,8 +1,7 @@
 import pytest
 
-from src.generators import (filter_by_currency,
-                            transaction_descriptions,
-                            card_number_generator)
+from src.generators import (card_number_generator, filter_by_currency,
+                            transaction_descriptions)
 
 
 def test_filter_by_currency_usd(list_transactions: list[dict]) -> None:
@@ -10,7 +9,7 @@ def test_filter_by_currency_usd(list_transactions: list[dict]) -> None:
     usd_transactions_list = list(generator)
     assert len(usd_transactions_list) == 3
     assert all(
-        transaction["operationAmount"]["currency"]["code"] =="USD"
+        transaction["operationAmount"]["currency"]["code"] == "USD"
         for transaction in usd_transactions_list
     )
 
@@ -33,10 +32,8 @@ def test_transaction_descriptions(
     generator = transaction_descriptions(list_transactions)
     list_transaction_descriptions = list(generator)
     assert len(list_transaction_descriptions) == 5
-    assert filter(
-        lambda transaction: isinstance(transaction["description"], str),
-        list_transaction_descriptions
-    )
+    with pytest.raises(ValueError):
+        next(transaction_descriptions([]))
 
 
 def test_transaction_descriptions_without_transactions(
@@ -47,8 +44,6 @@ def test_transaction_descriptions_without_transactions(
     generator = transaction_descriptions(list_transactions)
     with pytest.raises(ValueError):
         next(generator)
-    with pytest.raises(ValueError):
-        next(transaction_descriptions([]))
 
 
 @pytest.mark.parametrize("start, stop, expected", [
@@ -58,14 +53,17 @@ def test_transaction_descriptions_without_transactions(
         '0000 0000 0000 0002',
         '0000 0000 0000 0003',
     ]),
-    (9999999999999998, 9999999999999999, ['9999 9999 9999 9998', '9999 9999 9999 9999']),
+    (9999999999999998, 9999999999999999,
+     ['9999 9999 9999 9998', '9999 9999 9999 9999']),
     (3, 1, [])
 ])
-def test_card_number_generator(start, stop, expected):
+def test_card_number_generator(
+        start: int, stop: int, expected: str
+) -> None:
     card_numbers = list(card_number_generator(start, stop))
     assert card_numbers == expected
 
 
-def test_card_number_generator_invalid_range():
+def test_card_number_generator_invalid_range() -> None:
     with pytest.raises(ValueError):
         list(card_number_generator(99999999999999990, 1))
