@@ -1,25 +1,25 @@
-import pytest
-from src.decorators import log
 from unittest.mock import mock_open, patch
+
+from src.decorators import log
 
 
 @log()
 def my_function(x, y):
     return x / y
 
-my_function(1, 0)
-
 
 def test_log_to_console_correct_value(capsys):
-        my_function(1, 1)
-        captured = capsys.readouterr()
-        assert captured.out == "my_function ok\n"
+    my_function(1, 1)
+    captured = capsys.readouterr()
+    assert captured.out == "my_function ok\n"
 
 
 def test_log_to_console_invalid_value(capsys):
     my_function(1, 0)
     captured = capsys.readouterr()
-    assert captured.out == "my_function error: ZeroDivisionError. Inputs: (1, 0), {}\n"
+    assert captured.out == ("my_function error: "
+                            "ZeroDivisionError. Inputs: (1, 0), {}\n"
+                            )
 
 
 @patch("builtins.open", new_callable=mock_open)

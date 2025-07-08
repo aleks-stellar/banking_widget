@@ -1,6 +1,7 @@
 def log(filename=None):
+    """ Декоратор, который регистрирует
+      детали выполнения функции """
     def wrapper(function):
-
         def inner(*args, **kwargs):
             result = None
             try:
