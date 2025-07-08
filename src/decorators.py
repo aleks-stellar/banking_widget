@@ -1,8 +1,11 @@
-def log(filename=None):
+from typing import Any, Callable, Iterable
+
+
+def log(filename: None | str = None) -> Callable:
     """ Декоратор, который регистрирует
       детали выполнения функции """
-    def wrapper(function):
-        def inner(*args, **kwargs):
+    def wrapper(function: Callable) -> Callable:
+        def inner(*args: Iterable, **kwargs: Iterable) -> Any:
             result = None
             try:
                 result = function(*args, **kwargs)

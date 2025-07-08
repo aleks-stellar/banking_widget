@@ -1,20 +1,26 @@
-from unittest.mock import mock_open, patch
+from unittest.mock import Mock, mock_open, patch
+
+import pytest
 
 from src.decorators import log
 
 
 @log()
-def my_function(x, y):
+def my_function(x: int, y: int) -> float:
     return x / y
 
 
-def test_log_to_console_correct_value(capsys):
+def test_log_to_console_correct_value(
+        capsys: pytest.CaptureFixture[str]
+) -> None:
     my_function(1, 1)
     captured = capsys.readouterr()
     assert captured.out == "my_function ok\n"
 
 
-def test_log_to_console_invalid_value(capsys):
+def test_log_to_console_invalid_value(
+        capsys: pytest.CaptureFixture[str]
+) -> None:
     my_function(1, 0)
     captured = capsys.readouterr()
     assert captured.out == ("my_function error: "
@@ -23,9 +29,9 @@ def test_log_to_console_invalid_value(capsys):
 
 
 @patch("builtins.open", new_callable=mock_open)
-def test_log_to_file_correct(mock_file):
+def test_log_to_file_correct(mock_file: Mock) -> None:
     @log(filename="test.log")
-    def test_function(a, b):
+    def test_function(a: int, b: int) -> int:
         return a // b
 
     test_function(1, 1)
