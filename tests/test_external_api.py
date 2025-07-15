@@ -1,11 +1,16 @@
-from unittest.mock import patch, Mock
+from unittest.mock import Mock, patch
+
 from src.external_api import convert_currency
 
 
 @patch("src.external_api.requests.get")
 @patch("src.external_api.os.getenv")
 @patch("src.external_api.load_dotenv")
-def test_convert_currency(mock_load_dotenv, mock_getenv, mock_requests_get):
+def test_convert_currency(
+        mock_load_dotenv: Mock,
+        mock_getenv: Mock,
+        mock_requests_get: Mock
+) -> None:
     mock_load_dotenv.return_value = None
 
     # Мок os.getenv для возврата фейкового ключа
