@@ -1,7 +1,4 @@
-import os
-
 import requests
-from dotenv import load_dotenv
 
 from src.config import API_KEY_CONVERT
 
