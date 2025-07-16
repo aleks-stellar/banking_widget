@@ -3,6 +3,8 @@ import os
 import requests
 from dotenv import load_dotenv
 
+from src.config import API_KEY_CONVERT
+
 
 def convert_currency(operations_dict: dict) -> float:
     """
@@ -14,11 +16,8 @@ def convert_currency(operations_dict: dict) -> float:
     from_currency = operations_dict["operationAmount"]["currency"]["code"]
     to_currency = "RUB"
 
-    # Загружаем переменные окружения
-    load_dotenv()
-
     # Получаем ключ
-    api_key = os.getenv("API_KEY_CONVERT")
+    api_key = API_KEY_CONVERT
 
     api_url = "https://api.apilayer.com/exchangerates_data/convert"
 
