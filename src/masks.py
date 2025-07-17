@@ -11,7 +11,28 @@ logging.basicConfig(
     encoding="utf-8"
 )
 card_logger = logging.getLogger("app.card_mask")
+card_logger.setLevel(logging.INFO)
+card_file_handler = logging.FileHandler(
+    Path("..", "logs", "masks.log"),
+    mode="w", encoding="utf-8"
+)
+card_file_formatter = logging.Formatter(
+    "%(asctime)s - %(name)s - %(levelname)s: %(message)s",
+)
+card_file_handler.setFormatter(card_file_formatter)
+card_logger.addHandler(card_file_handler)
+
 account_logger = logging.getLogger("app.account_mask")
+account_logger.setLevel(logging.INFO)
+account_file_handler = logging.FileHandler(
+    Path("..", "logs", "masks.log"),
+    mode="w", encoding="utf-8"
+)
+account_file_formatter = logging.Formatter(
+    "%(asctime)s - %(name)s - %(levelname)s: %(message)s",
+)
+account_file_handler.setFormatter(account_file_formatter)
+account_logger.addHandler(account_file_handler)
 
 
 def get_mask_card_number(card_number: int) -> str:
