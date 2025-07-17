@@ -39,18 +39,26 @@ def get_mask_card_number(card_number: int) -> str:
         return ""
 
     except Exception as e:
-        print(f"Непредвиденная ошибка {e}")
+        print(f"Непредвиденная ошибка: {e}")
         return ""
 
 
 def get_mask_account(account_number: int) -> str:
     """Функция принимает на вход номер счета и возвращает его маску."""
+    try:
+        if not isinstance(account_number, int):
+            raise TypeError("Полученное значение не является числом")
 
-    if not isinstance(account_number, int):
-        raise TypeError("Полученное значение не является числом")
+        if len(str(account_number)) != 20:
+            raise TypeError("Не верная длина номера счета")
 
-    if len(str(account_number)) != 20:
-        raise TypeError("Не верная длина номера счета")
+        modified_account_number = "**" + str(account_number)[-4:]
+        return modified_account_number
 
-    modified_account_number = "**" + str(account_number)[-4:]
-    return modified_account_number
+    except TypeError as e:
+        print(f"Ошибка: {e}")
+        return ""
+
+    except Exception as e:
+        print(f"Непредвиденная ошибка: {e}")
+        return ""
