@@ -60,6 +60,3 @@ def get_list_operations(path_to_json: Path) -> list[dict | None]:
         logger.error("Unexpected error...")
         print(f"Ошибка: {e}")
         return []
-
-
-print(get_list_operations(Path("..", "data", "operations.json")))
