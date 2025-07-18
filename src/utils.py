@@ -27,7 +27,9 @@ def get_list_operations(path_to_json: Path) -> list[dict | None]:
     try:
         # Проверка существования файла
         if not path_to_json.exists():
-            raise FileNotFoundError(f"Файл не найден по пути \"{path_to_json}\"")
+            raise FileNotFoundError(
+                f"Файл не найден по пути \"{path_to_json}\""
+            )
 
         # Открываем файл и загружаем json
         logger.info("Downloading transaction data from a file...")
