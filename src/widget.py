@@ -7,7 +7,7 @@
 'ДД.ММ.ГГГГ' ('11.03.2024').
 """
 
-from src import masks
+from src.masks import get_mask_card_number, get_mask_account
 
 
 def mask_account_card(card_info: str) -> str:
@@ -16,24 +16,30 @@ def mask_account_card(card_info: str) -> str:
 
     card_type_list = []
     card_info_list = card_info.split()
+    try:
+        if len(card_info_list) < 2:
+            raise TypeError("Неверный формат данных. Недостаточно информации")
 
-    if len(card_info_list) < 2:
-        raise TypeError
+        if card_info_list[0].isdigit():
+            raise TypeError("Неверный формат данных")
 
-    if card_info_list[0].isdigit():
-        raise TypeError
+        for string in card_info_list:
+            if string.isalpha():
+                card_type_list.append(string)
+        card_type = " ".join(card_type_list)
 
-    for string in card_info_list:
-        if string.isalpha():
-            card_type_list.append(string)
-    card_type = " ".join(card_type_list)
+        card_number = int(card_info_list[-1])
 
-    card_number = int(card_info_list[-1])
+        if card_type_list[0] == "Счет" and len(str(card_number)) == 20:
+            return f"{card_type} {get_mask_account(card_number)}"
+        elif len(str(card_number)) == 16:
+            return f"{card_type} {get_mask_card_number(card_number)}"
+        else:
+            raise TypeError("Некорректный номер карты или счета")
 
-    if card_type_list[0] == "Счет":
-        return f"{card_type} {masks.get_mask_account(card_number)}"
-    else:
-        return f"{card_type} {masks.get_mask_card_number(card_number)}"
+    except TypeError as e:
+        print(f"Ошибка: {e}")
+        return ""
 
 
 def get_date(date_str: str) -> str:
