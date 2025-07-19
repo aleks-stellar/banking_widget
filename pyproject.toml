@@ -19,6 +19,7 @@ requests = "^2.32.3"
 pytest = "^8.4.1"
 pytest-cov = "^6.2.1"
 python-dotenv = "^1.1.1"
+pandas-stubs = "^2.3.0.250703"
 
 
 [tool.poetry.group.lint.dependencies]
