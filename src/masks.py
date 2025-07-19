@@ -85,6 +85,3 @@ def get_mask_account(account_number: int) -> str:
         account_logger.error("Unexpected error...")
         print(f"Непредвиденная ошибка: {e}")
         return ""
-
-
-print(get_mask_card_number(4646464646464646))
