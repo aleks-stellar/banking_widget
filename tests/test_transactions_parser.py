@@ -6,7 +6,6 @@ import pandas as pd
 
 from src.transactions_parser import (read_csv_transactions,
                                      read_excel_transactions)
-from tests.conftest import rows_in_reader
 
 PATH_TO_FILE = Path(
     Path(__file__).parent.parent, "data", "transactions.csv"
@@ -186,4 +185,3 @@ def test_read_excel_transactions_exception(mock_read_excel: Mock) -> None:
     result = read_excel_transactions(PATH_TO_EXCEL_FILE)
     assert result == []
     mock_read_excel.assert_called_once_with(PATH_TO_EXCEL_FILE)
-

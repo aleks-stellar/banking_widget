@@ -1,5 +1,9 @@
+from typing import Collection
+
 import pandas as pd
 import pytest
+from pandas import DataFrame
+
 
 # Фикстура, возвращающая корректный номер карты
 @pytest.fixture
@@ -201,24 +205,26 @@ def rows_in_reader() -> list[dict[str, str]]:
 
 # Фикстура для датафрейма
 @pytest.fixture
-def df_data():
-    test_excel_data = pd.DataFrame({
-        "id": ["650703", "564764"],
-        "state": ["EXECUTED", "EXECUTED"],
-        "date": ["2023-09-05T11:30:32Z", "2021-06-07T12:36:31Z"],
-        "amount": ["16210", "14710"],
-        "currency_name": ["Sol", "USD"],
-        "currency_code": ["PEN", "USD"],
-        "description": ["Перевод организации", "Оплата услуг"],
-        "from": ["Счет 58803664561298323391", "Maestro 5880366458323391"],
-        "to": ["Счет 39745660563456619397", "Счет 74635674386435267423"]
-    })
+def df_data() -> DataFrame:
+    test_excel_data = pd.DataFrame(
+        {
+            "id": ["650703", "564764"],
+            "state": ["EXECUTED", "EXECUTED"],
+            "date": ["2023-09-05T11:30:32Z", "2021-06-07T12:36:31Z"],
+            "amount": ["16210", "14710"],
+            "currency_name": ["Sol", "USD"],
+            "currency_code": ["PEN", "USD"],
+            "description": ["Перевод организации", "Оплата услуг"],
+            "from": ["Счет 58803664561298323391", "Maestro 5880366458323391"],
+            "to": ["Счет 39745660563456619397", "Счет 74635674386435267423"]
+        }
+    )
     return test_excel_data
 
 
 # Фикстура для возвращаемого значения при чтении CSV или EXCEL
 @pytest.fixture
-def opened_and_formatted_transactions() -> list[dict[str, str]]:
+def opened_and_formatted_transactions() -> list[dict[str, Collection[str]]]:
     expected_result = [
             {
                 "id": "650703",
