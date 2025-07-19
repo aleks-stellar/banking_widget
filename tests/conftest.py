@@ -1,4 +1,5 @@
 import pytest
+from pandas.io.formats.format import return_docstring
 
 
 # Фикстура, возвращающая корректный номер карты
@@ -167,3 +168,70 @@ def list_transactions() -> list[dict]:
             "to": "Счет 14211924144426031657"
         }
     ]
+
+
+# Фикстура для мока csv.DictReader
+@pytest.fixture
+def rows_in_reader() -> list[dict[str, str]]:
+    test_csv_data = [
+        {
+            "id": "650703",
+            "state": "EXECUTED",
+            "date": "2023-09-05T11:30:32Z",
+            "amount": "16210",
+            "currency_name": "Sol",
+            "currency_code": "PEN",
+            "description": "Перевод организации",
+            "from": "Счет 58803664561298323391",
+            "to": "Счет 39745660563456619397"
+        },
+        {
+            "id": "564764",
+            "state": "EXECUTED",
+            "date": "2021-06-07T12:36:31Z",
+            "amount": "14710",
+            "currency_name": "USD",
+            "currency_code": "USD",
+            "description": "Оплата услуг",
+            "from": "Maestro 5880366458323391",
+            "to": "Счет 74635674386435267423"
+        }
+    ]
+    return test_csv_data
+
+
+@pytest.fixture
+def opened_and_formatted_transactions() -> list[dict[str, str]]:
+    expected_result = [
+            {
+                "id": "650703",
+                "state": "EXECUTED",
+                "date": "2023-09-05T11:30:32Z",
+                "operationAmount": {
+                    "amount": "16210",
+                    "currency": {
+                        "name": "Sol",
+                        "code": "PEN"
+                    }
+                },
+                "description": "Перевод организации",
+                "from": "Счет 58803664561298323391",
+                "to": "Счет 39745660563456619397"
+            },
+            {
+                "id": "564764",
+                "state": "EXECUTED",
+                "date": "2021-06-07T12:36:31Z",
+                "operationAmount": {
+                    "amount": "14710",
+                    "currency": {
+                        "name": "USD",
+                        "code": "USD"
+                    }
+                },
+                "description": "Оплата услуг",
+                "from": "Maestro 5880366458323391",
+                "to": "Счет 74635674386435267423"
+            }
+        ]
+    return expected_result
