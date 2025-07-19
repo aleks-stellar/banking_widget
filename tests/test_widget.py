@@ -29,14 +29,10 @@ def test_mask_account_card_parameterized(
 
 # Тестирование функции mask_account_card при некорректных входных данных
 def test_mask_account_card_incorrect() -> None:
-    with pytest.raises(TypeError):
-        mask_account_card("Счет")
-    with pytest.raises(TypeError):
-        mask_account_card("Счет 6924")
-    with pytest.raises(TypeError):
-        mask_account_card("5768374894856730")
-    with pytest.raises(TypeError):
-        mask_account_card("5768374894856730 Maestro")
+    assert mask_account_card("Счет") == ""
+    assert mask_account_card("Счет 6924") == ""
+    assert mask_account_card("5768374894856730") == ""
+    assert mask_account_card("5768374894856730 Maestro") == ""
 
 
 # Тестирование функции get_date при корректных входных данных
