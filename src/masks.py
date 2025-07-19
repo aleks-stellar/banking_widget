@@ -1,7 +1,6 @@
 import logging
 from pathlib import Path
 
-
 PATH_TO_LOG_FILE = Path(Path(__file__).parent.parent, "logs", "masks.log")
 
 card_logger = logging.getLogger("app.card_mask")
