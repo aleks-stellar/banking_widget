@@ -1,15 +1,6 @@
 import logging
 from pathlib import Path
 
-PATH_TO_LOG_FILE = Path("..", "logs", "masks.log")
-
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s - %(name)s - %(levelname)s: %(message)s",
-    filename=PATH_TO_LOG_FILE,
-    filemode="w",
-    encoding="utf-8"
-)
 card_logger = logging.getLogger("app.card_mask")
 card_logger.setLevel(logging.INFO)
 card_file_handler = logging.FileHandler(
