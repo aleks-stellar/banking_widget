@@ -1,7 +1,5 @@
 import pandas as pd
 import pytest
-from pandas.io.formats.format import return_docstring
-
 
 # Фикстура, возвращающая корректный номер карты
 @pytest.fixture
@@ -254,5 +252,3 @@ def opened_and_formatted_transactions() -> list[dict[str, str]]:
             }
         ]
     return expected_result
-
-
