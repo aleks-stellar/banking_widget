@@ -3,10 +3,13 @@ import logging
 from json import JSONDecodeError
 from pathlib import Path
 
+
+PATH_TO_LOG_FILE = Path(Path(__file__).parent.parent, "logs", "utils.log")
+
 logger = logging.getLogger("app.utils")
 logger.setLevel(logging.INFO)
 file_handler = logging.FileHandler(
-    Path("..", "logs", "utils.log"),
+    PATH_TO_LOG_FILE,
     mode="w", encoding="utf-8"
 )
 file_formatter = logging.Formatter(

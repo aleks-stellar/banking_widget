@@ -1,10 +1,13 @@
 import logging
 from pathlib import Path
 
+
+PATH_TO_LOG_FILE = Path(Path(__file__).parent.parent, "logs", "masks.log")
+
 card_logger = logging.getLogger("app.card_mask")
 card_logger.setLevel(logging.INFO)
 card_file_handler = logging.FileHandler(
-    Path("..", "logs", "masks.log"),
+    PATH_TO_LOG_FILE,
     mode="w", encoding="utf-8"
 )
 card_file_formatter = logging.Formatter(
@@ -16,7 +19,7 @@ card_logger.addHandler(card_file_handler)
 account_logger = logging.getLogger("app.account_mask")
 account_logger.setLevel(logging.INFO)
 account_file_handler = logging.FileHandler(
-    Path("..", "logs", "masks.log"),
+    PATH_TO_LOG_FILE,
     mode="w", encoding="utf-8"
 )
 account_file_formatter = logging.Formatter(
@@ -82,3 +85,6 @@ def get_mask_account(account_number: int) -> str:
         account_logger.error("Unexpected error...")
         print(f"Непредвиденная ошибка: {e}")
         return ""
+
+
+print(get_mask_card_number(4646464646464646))
