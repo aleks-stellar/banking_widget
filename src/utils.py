@@ -3,10 +3,12 @@ import logging
 from json import JSONDecodeError
 from pathlib import Path
 
+PATH_TO_LOG_FILE = Path(Path(__file__).parent.parent, "logs", "utils.log")
+
 logger = logging.getLogger("app.utils")
 logger.setLevel(logging.INFO)
 file_handler = logging.FileHandler(
-    Path("..", "logs", "utils.log"),
+    PATH_TO_LOG_FILE,
     mode="w", encoding="utf-8"
 )
 file_formatter = logging.Formatter(
@@ -27,7 +29,9 @@ def get_list_operations(path_to_json: Path) -> list[dict | None]:
     try:
         # Проверка существования файла
         if not path_to_json.exists():
-            raise FileNotFoundError(f"Файл не найден по пути: {path_to_json}")
+            raise FileNotFoundError(
+                f"Файл не найден по пути \"{path_to_json}\""
+            )
 
         # Открываем файл и загружаем json
         logger.info("Downloading transaction data from a file...")

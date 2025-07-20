@@ -1,19 +1,12 @@
 import logging
 from pathlib import Path
 
-PATH_TO_LOG_FILE = Path("..", "logs", "masks.log")
+PATH_TO_LOG_FILE = Path(Path(__file__).parent.parent, "logs", "masks.log")
 
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s - %(name)s - %(levelname)s: %(message)s",
-    filename=PATH_TO_LOG_FILE,
-    filemode="w",
-    encoding="utf-8"
-)
 card_logger = logging.getLogger("app.card_mask")
 card_logger.setLevel(logging.INFO)
 card_file_handler = logging.FileHandler(
-    Path("..", "logs", "masks.log"),
+    PATH_TO_LOG_FILE,
     mode="w", encoding="utf-8"
 )
 card_file_formatter = logging.Formatter(
@@ -25,7 +18,7 @@ card_logger.addHandler(card_file_handler)
 account_logger = logging.getLogger("app.account_mask")
 account_logger.setLevel(logging.INFO)
 account_file_handler = logging.FileHandler(
-    Path("..", "logs", "masks.log"),
+    PATH_TO_LOG_FILE,
     mode="w", encoding="utf-8"
 )
 account_file_formatter = logging.Formatter(
