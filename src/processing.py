@@ -107,8 +107,10 @@ def count_transactions_by_description(
 
     # Создает циклом список категорий из списка транзакций
     for item in operations_list:
-        if item["description"] in categories_list:
-            descriptions_list.append(item["description"])
+        # Словари с транзакциями без ключа не вызывают ошибку
+        if "description" in item:
+            if item["description"] in categories_list:
+                descriptions_list.append(item["description"])
 
     # Создаем словарь из объекта Counter
     result = dict(Counter(descriptions_list))
