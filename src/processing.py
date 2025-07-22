@@ -11,16 +11,12 @@ def filter_by_state(
     Принимает список словарей с банковскими операциями
     и проводит его фильтрацию по ключу.
     """
+    filtered_transactions_list = []
 
     for transaction in transactions_list:
-        if "state" not in transaction:
-            raise KeyError
+        if "state" in transaction and transaction["state"] == state:
+            filtered_transactions_list.append(transaction)
 
-    filtered_transactions_list = [
-        transaction
-        for transaction in transactions_list
-        if transaction["state"] == state
-    ]
     return filtered_transactions_list
 
 
