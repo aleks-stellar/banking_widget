@@ -1,7 +1,8 @@
 import pytest
 
-from src.processing import (filter_by_state, filter_transactions_by_pattern,
-                            get_date_format, sort_by_date)
+from src.processing import (count_transactions_by_description, filter_by_state,
+                            filter_transactions_by_pattern, get_date_format,
+                            sort_by_date)
 
 
 # Тестирование функции filter_by_state при корректных входных данных
@@ -187,3 +188,42 @@ def test_filter_transactions_by_pattern_key_error(
 
     assert actual_result == []
     assert len(actual_result) == 0
+
+
+def test_count_transactions_by_description_valid(
+        list_transactions: list[dict]
+) -> None:
+    """
+    Тестирует работу функцию count_transactions_by_description_valid
+    с корректными параметрами.
+    """
+    descriptions_list = ["Перевод организации", "Оплата услуг"]
+    actual_result = count_transactions_by_description(
+        list_transactions, descriptions_list
+    )
+
+    expected_result = {'Перевод организации': 2, 'Оплата услуг': 0}
+    assert expected_result == actual_result
+
+
+def test_count_transactions_by_description_invalid_keys() -> None:
+    """
+    Тестирует работу функцию count_transactions_by_description_valid
+    с корректными параметрами.
+    """
+    transactions_data = [
+        {
+            "id": 142264268,
+            "state": "EXECUTED",
+        },
+        {
+            "id": 895315941,
+            "description": "Перевод с карты на карту"
+        }
+    ]
+    descriptions_list = ["Перевод с карты на карту", "Оплата услуг"]
+    actual_result = count_transactions_by_description(
+        transactions_data, descriptions_list
+    )
+    expected_result = {"Перевод с карты на карту": 1, "Оплата услуг": 0}
+    assert actual_result == expected_result
