@@ -1,10 +1,7 @@
 import pytest
 
-from src.processing import (
-    filter_by_state,
-    get_date_format, sort_by_date,
-    filter_transactions_by_pattern
-)
+from src.processing import (filter_by_state, filter_transactions_by_pattern,
+                            get_date_format, sort_by_date)
 
 
 # Тестирование функции filter_by_state при корректных входных данных
@@ -128,7 +125,7 @@ def test_get_date_incorrect_format(
 
 
 def test_filter_transactions_by_pattern_valid(
-        opened_and_formatted_transactions
+        opened_and_formatted_transactions: list[dict]
 ) -> None:
     """
     Тестирует функцию filter_transactions_by_pattern_valid,
@@ -165,7 +162,7 @@ def test_filter_transactions_by_pattern_valid(
 
 
 def test_filter_transactions_by_pattern_key_error(
-        opened_and_formatted_transactions
+        opened_and_formatted_transactions: list[dict]
 ) -> None:
     """
     Тестирует работу функцию filter_transactions_by_pattern_valid
