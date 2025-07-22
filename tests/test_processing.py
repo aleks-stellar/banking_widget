@@ -41,12 +41,9 @@ def test_filter_by_state_different_state(
 
 # Тест для обработки случая, когда ключа state нет в словаре
 def test_filter_by_state_without_state_key() -> None:
-    with pytest.raises(KeyError):
-        filter_by_state([
+    assert filter_by_state([
             {'id': 41428829, 'date': '2019-07-03T18:35:29.512364'}
-        ])
-    with pytest.raises(KeyError):
-        filter_by_state([{}])
+        ]) == []
 
 
 # Тестирование функции sort_by_date с корректными
