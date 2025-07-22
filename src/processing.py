@@ -1,7 +1,5 @@
 import re
-from pprint import pprint
 from typing import Dict, List
-from collections import defaultdict
 
 
 def filter_by_state(
