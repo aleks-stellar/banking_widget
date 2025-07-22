@@ -1,4 +1,7 @@
+import re
+from pprint import pprint
 from typing import Dict, List
+from collections import defaultdict
 
 
 def filter_by_state(
@@ -60,3 +63,32 @@ def sort_by_date(
         reverse=sorting_direction
     )
     return sorted_transactions_list
+
+
+def filter_transactions_by_pattern(
+        transactions_data: list[dict], search_string: str
+) -> list[dict]:
+    """
+    Выбирает из списка словарей с банковскими операциями те,
+    у которых в описании есть данная строка.
+    :param transactions_data: Список словарей с банковскими операциями.
+    :param search_string: Строка, которая должна быть в описании операции.
+    :return: Отфильтрованный список словарей.
+    """
+    try:
+        # Шаблон строки поиска с учетом регистра
+        pattern = re.compile(search_string, re.IGNORECASE)
+        result = []
+
+        for transaction in transactions_data:
+            if "description" in transaction:
+                if pattern.search(transaction["description"]):
+                    result.append(transaction)
+            else:
+                raise KeyError("В словаре нет ключа \"description\"")
+
+        return result
+
+    except KeyError as e:
+        print(f"Ошибка: {e}")
+        return []
