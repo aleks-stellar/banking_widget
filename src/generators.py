@@ -3,21 +3,6 @@
 from typing import Iterator
 
 
-# def filter_by_currency(
-#         transactions: list[dict],
-#         currency: str
-# ) -> Iterator[dict]:
-#     """Функция по списку транзакций возвращает итератор
-#     с транзакциями в определенной валюте"""
-#     usd_transactions_count = 0
-#     for transaction in transactions:
-#         if transaction["operationAmount"]["currency"]["code"] == currency:
-#             yield transaction
-#             usd_transactions_count += 1
-#         if usd_transactions_count == 0:
-#             raise ValueError("Не найдено транзакции в заданной валюте")
-
-
 def filter_by_currency(
         transactions: list[dict],
         currency: str
