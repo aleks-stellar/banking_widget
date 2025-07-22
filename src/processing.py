@@ -1,4 +1,5 @@
 import re
+from collections import Counter
 from typing import Dict, List
 
 
@@ -90,3 +91,31 @@ def filter_transactions_by_pattern(
     except KeyError as e:
         print(f"Ошибка: {e}")
         return []
+
+
+def count_transactions_by_description(
+        operations_list: list[dict],
+        categories_list: list[str]
+) -> dict[str, int]:
+    """
+    Подсчитывает в словарь транзакции по категориям.
+    :param operations_list: Список словарей с банковскими операциями.
+    :param categories_list: Список категорий для подсчета.
+    :return: Словарь {название категории: кол-во операций}.
+    """
+    descriptions_list = []
+
+    # Создает циклом список категорий из списка транзакций
+    for item in operations_list:
+        if item["description"] in categories_list:
+            descriptions_list.append(item["description"])
+
+    # Создаем словарь из объекта Counter
+    result = dict(Counter(descriptions_list))
+
+    # Добавляем в этот словарь отсутствующие категории со значениями 0
+    for category in categories_list:
+        if category not in descriptions_list:
+            result[category] = 0
+
+    return dict(result)
