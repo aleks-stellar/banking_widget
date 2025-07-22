@@ -6,8 +6,8 @@ def filter_by_state(
     state: str = "EXECUTED"
 ) -> List[Dict[str, str | int]]:
     """
-    Функция принимает список словарей и проводит его фильтрацию
-    по ключу
+    Принимает список словарей с банковскими операциями
+    и проводит его фильтрацию по ключу.
     """
 
     for transaction in transactions_list:
@@ -27,8 +27,8 @@ def get_date_format(
     transaction_dict: Dict[str, str | int]
 ) -> int:
     """
-    Функция принимает словарь и извлекает из
-    него дату для дальнейшей сортировки
+    Принимает словарь с информацией о банковской операции
+    и извлекает из него дату для дальнейшей сортировки.
     """
     date_str = str(transaction_dict["date"])
     date_list = date_str.split("-", 2)
@@ -51,7 +51,8 @@ def sort_by_date(
     sorting_direction: bool = True
 ) -> List[Dict[str, str | int]]:
     """
-    Принимает на вход список словарей и сортирует его по дате
+    Принимает список словарей с информацией о банковской операции
+    и сортирует его по дате.
     """
     sorted_transactions_list = sorted(
         unsorted_transactions_list,
