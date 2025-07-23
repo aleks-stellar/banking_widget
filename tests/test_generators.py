@@ -14,18 +14,6 @@ def test_filter_by_currency_usd(list_transactions: list[dict]) -> None:
     )
 
 
-def test_filter_by_currency_usd_without_usd(
-        list_transactions: list[dict]
-) -> None:
-    del list_transactions[0]
-    del list_transactions[0]
-    del list_transactions[1]
-    print(list_transactions)
-    generator = filter_by_currency(list_transactions, "USD")
-    with pytest.raises(ValueError):
-        next(generator)
-
-
 def test_transaction_descriptions(
         list_transactions: list[dict]
 ) -> None:

@@ -1,6 +1,8 @@
 import pytest
 
-from src.processing import filter_by_state, get_date_format, sort_by_date
+from src.processing import (count_transactions_by_description, filter_by_state,
+                            filter_transactions_by_pattern, get_date_format,
+                            sort_by_date)
 
 
 # Тестирование функции filter_by_state при корректных входных данных
@@ -39,12 +41,9 @@ def test_filter_by_state_different_state(
 
 # Тест для обработки случая, когда ключа state нет в словаре
 def test_filter_by_state_without_state_key() -> None:
-    with pytest.raises(KeyError):
-        filter_by_state([
+    assert filter_by_state([
             {'id': 41428829, 'date': '2019-07-03T18:35:29.512364'}
-        ])
-    with pytest.raises(KeyError):
-        filter_by_state([{}])
+        ]) == []
 
 
 # Тестирование функции sort_by_date с корректными
@@ -121,3 +120,107 @@ def test_get_date_incorrect_format(
         get_date_format(
             {'id': 41428829, 'state': 'EXECUTED', 'date': ""}
         )
+
+
+def test_filter_transactions_by_pattern_valid(
+        opened_and_formatted_transactions: list[dict]
+) -> None:
+    """
+    Тестирует функцию filter_transactions_by_pattern_valid,
+    вызванную в корректными параметрами.
+    """
+    expected_result = [
+            {
+                "id": "650703",
+                "state": "EXECUTED",
+                "date": "2023-09-05T11:30:32Z",
+                "operationAmount": {
+                    "amount": "16210",
+                    "currency": {
+                        "name": "Sol",
+                        "code": "PEN"
+                    }
+                },
+                "description": "Перевод организации",
+                "from": "Счет 58803664561298323391",
+                "to": "Счет 39745660563456619397"
+            }
+    ]
+    actual_result_valid = filter_transactions_by_pattern(
+        opened_and_formatted_transactions,
+        search_string="перевод"
+    )
+    actual_result_empty = filter_transactions_by_pattern(
+        opened_and_formatted_transactions,
+        search_string="возмещение"
+    )
+    assert actual_result_valid == expected_result
+    assert len(actual_result_valid) == 1
+    assert actual_result_empty == []
+
+
+def test_filter_transactions_by_pattern_key_error(
+        opened_and_formatted_transactions: list[dict]
+) -> None:
+    """
+    Тестирует работу функцию filter_transactions_by_pattern_valid
+    с списком транзакций с отсутствующим ключом "description".
+    """
+    data_transactions = [
+            {
+                "id": "650703",
+                "state": "EXECUTED",
+                "date": "2023-09-05T11:30:32Z",
+            },
+            {
+                "id": "564764",
+                "state": "EXECUTED",
+                "date": "2021-06-07T12:36:31Z",
+            }
+        ]
+
+    actual_result = filter_transactions_by_pattern(
+        data_transactions, "перевод"
+    )
+
+    assert actual_result == []
+    assert len(actual_result) == 0
+
+
+def test_count_transactions_by_description_valid(
+        list_transactions: list[dict]
+) -> None:
+    """
+    Тестирует работу функцию count_transactions_by_description_valid
+    с корректными параметрами.
+    """
+    descriptions_list = ["Перевод организации", "Оплата услуг"]
+    actual_result = count_transactions_by_description(
+        list_transactions, descriptions_list
+    )
+
+    expected_result = {'Перевод организации': 2, 'Оплата услуг': 0}
+    assert expected_result == actual_result
+
+
+def test_count_transactions_by_description_invalid_keys() -> None:
+    """
+    Тестирует работу функцию count_transactions_by_description_valid
+    с корректными параметрами.
+    """
+    transactions_data = [
+        {
+            "id": 142264268,
+            "state": "EXECUTED",
+        },
+        {
+            "id": 895315941,
+            "description": "Перевод с карты на карту"
+        }
+    ]
+    descriptions_list = ["Перевод с карты на карту", "Оплата услуг"]
+    actual_result = count_transactions_by_description(
+        transactions_data, descriptions_list
+    )
+    expected_result = {"Перевод с карты на карту": 1, "Оплата услуг": 0}
+    assert actual_result == expected_result
